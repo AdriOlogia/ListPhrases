@@ -69,13 +69,6 @@ function App() {
     dispatch(getWordsLocalStorage(arrayPhrases.phrases));
   }, [arrayPhrases]);
 
-  console.log(formState.inputSearch.length);
-  console.log(wordsFinded.length);
-
-  console.log(
-    wordsFinded.length === 0 && formState.inputSearch.length > 0 ? "yes" : "no"
-  );
-
   return loadPage ? (
     <Box textAlign={"center"} mt={5}>
       <CircularProgress />
