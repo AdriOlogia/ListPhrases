@@ -30,6 +30,11 @@ interface IArrayPhrases {
   phrases: Array<string>;
 }
 
+interface IFormState {
+  inputSearch: string;
+  inputAdd: string;
+}
+
 function App() {
   const { listWords, wordsFinded } = useSelector(
     (state: RootState) => state.wordsList
@@ -40,7 +45,7 @@ function App() {
     phrases: [],
   });
   const [loadPage, setLoadPage] = useState(true);
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<IFormState>({
     inputSearch: "",
     inputAdd: "",
   });
@@ -63,6 +68,13 @@ function App() {
   useEffect(() => {
     dispatch(getWordsLocalStorage(arrayPhrases.phrases));
   }, [arrayPhrases]);
+
+  console.log(formState.inputSearch.length);
+  console.log(wordsFinded.length);
+
+  console.log(
+    wordsFinded.length === 0 && formState.inputSearch.length > 0 ? "yes" : "no"
+  );
 
   return loadPage ? (
     <Box textAlign={"center"} mt={5}>
@@ -134,7 +146,13 @@ function App() {
       </SecondContent>
       {/* Card Container */}
       <ThirdContent container size={12}>
-        {formState.inputSearch.length > 0 && wordsFinded.length >= 0 ? (
+        {(listWords.length === 0 && wordsFinded.length === 0) ||
+        (wordsFinded.length === 0 && formState.inputSearch.length > 0) ? (
+          <Box textAlign={"center"} style={{ color: "gray" }}>
+            <h1>No hay frases disponibles</h1>
+            <h2>Agregá una frase a la lista</h2>
+          </Box>
+        ) : formState.inputSearch.length > 0 && wordsFinded.length >= 0 ? (
           wordsFinded.map((item, index) => (
             <Grid2 key={index} size={{ lg: 2, xs: 12 }}>
               <LetterCard
@@ -147,11 +165,6 @@ function App() {
               />
             </Grid2>
           ))
-        ) : listWords.length === 0 && wordsFinded.length === 0 ? (
-          <Box textAlign={"center"} style={{ color: "black" }}>
-            <h1>Usted no posee frases disponibles</h1>
-            <h2>Agregá una frase a la lista con el boton de arriba</h2>
-          </Box>
         ) : (
           listWords.map((item, index) => (
             <Grid2 key={index} size={{ lg: 2, xs: 12 }}>
