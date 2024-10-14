@@ -50,6 +50,11 @@ function App() {
     inputAdd: "",
   });
 
+  const sanitizeCommit = (param: string | null) => {
+    if (!param) return "";
+    return param.replace(/[^a-zA-Z\s]/g, "");
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoadPage(false);
@@ -109,7 +114,7 @@ function App() {
               onChange={(e) => {
                 setFormState({
                   ...formState,
-                  [e.target.name]: e.target.value,
+                  [e.target.name]: sanitizeCommit(e.target.value),
                 });
               }}
             />
@@ -147,7 +152,7 @@ function App() {
           </Box>
         ) : formState.inputSearch.length > 0 && wordsFinded.length >= 0 ? (
           wordsFinded.map((item, index) => (
-            <Grid2 key={index} size={{ lg: 2, xs: 12 }}>
+            <Grid2 key={index} size={{ lg: 3, xs: 12 }}>
               <LetterCard
                 letter={item}
                 onClick={() => {
@@ -160,7 +165,7 @@ function App() {
           ))
         ) : (
           listWords.map((item, index) => (
-            <Grid2 key={index} size={{ lg: 2, xs: 12 }}>
+            <Grid2 key={index} size={{ lg: 3, xs: 12 }}>
               <LetterCard
                 letter={item}
                 onClick={() => {

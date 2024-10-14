@@ -1,7 +1,7 @@
 // material ui
-import Card from "@mui/material/Card";
 import { CardHeader, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { CardLetterContainer } from "./LetterCard.style";
 
 interface IProp {
   letter: string | number;
@@ -9,7 +9,7 @@ interface IProp {
 }
 const LetterCard = ({ letter, onClick }: IProp) => {
   return (
-    <Card variant="elevation">
+    <CardLetterContainer variant="elevation">
       <CardHeader
         disableTypography={true}
         action={
@@ -22,7 +22,7 @@ const LetterCard = ({ letter, onClick }: IProp) => {
         }
         subheader={letter}
       />
-    </Card>
+    </CardLetterContainer>
   );
 };
 
